@@ -4,7 +4,7 @@ import ru.otus.homework.anotation.After;
 import ru.otus.homework.anotation.Before;
 import ru.otus.homework.anotation.Test;
 import ru.otus.homework.tests.TestClass;
-import ru.otus.reflection.DemoClass;
+
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
