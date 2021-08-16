@@ -25,8 +25,8 @@ public class CellMoney implements Cloneable {
         this.count = count;
     }
 
-    public CellMoney diferentCell(CellMoney cellMoney){
-       return  new CellMoney(nominal, count - cellMoney.getCount());
+    public CellMoney diferentCell(CellMoney  cellMoney){
+       return  new CellMoney(nominal,  count - cellMoney.getCount());
     }
 
 

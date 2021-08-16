@@ -18,7 +18,7 @@ public class Main {
         }
         System.out.println("  ");
         System.out.println("выдать");
-        Map<Integer, CellMoney> test = bankomat.getMoney(1600);
+        Map<Integer, CellMoney> test =  bankomat.getMoney(1600);
         if (test != null) {
             TreeSet<Integer> setMed = new TreeSet(test.keySet());
             for (Integer t : setMed) {
