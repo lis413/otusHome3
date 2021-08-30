@@ -3,4 +3,6 @@ include 'L01-gradle'
 include 'L04-generics'
 include 'L06-annotation'
 include 'L06-reflection'
+include 'L15-structuralPatterns:demo'
+include 'L15-structuralPatterns:homework'
 
