@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 class ComplexProcessorTest {
 
-    @Test
+    @org.junit.Test
     @DisplayName("Тестируем вызовы процессоров")
     void handleProcessorsTest() {
         //given
