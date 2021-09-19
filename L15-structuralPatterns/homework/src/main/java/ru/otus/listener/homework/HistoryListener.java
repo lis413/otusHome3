@@ -10,10 +10,7 @@ import java.util.Optional;
 public class HistoryListener implements Listener, HistoryReader {
     private final List<Message> history;
 
-//    public HistoryListener(List<Message> history) {
-//        this.history = history;
-//    }
-//
+
     public HistoryListener(){
         history = new ArrayList<>();
     }
@@ -27,6 +24,9 @@ public class HistoryListener implements Listener, HistoryReader {
 
     @Override
     public Optional<Message> findMessageById(long id) {
+        for (Message m: history) {
+            if (m.getId() == id) return Optional.of(m);
+        }
         throw new UnsupportedOperationException();
     }
 }

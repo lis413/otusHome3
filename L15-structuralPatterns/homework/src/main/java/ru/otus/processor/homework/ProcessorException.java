@@ -6,10 +6,16 @@ import ru.otus.processor.Processor;
 import java.time.LocalTime;
 
 public class ProcessorException implements Processor {
+    private final TimeProvider timeProvider;
+
+    public ProcessorException(TimeProvider timeProvider) {
+        this.timeProvider = timeProvider;
+    }
+
     @Override
     public Message process(Message message) throws TimeProcessorException {
-        long secondsOfDay = LocalTime.now().toSecondOfDay();
-        if (secondsOfDay % 2 == 0) throw new TimeProcessorException();
+        var second = timeProvider.getTime().getSecond();
+        if (second % 2 == 0) throw new TimeProcessorException();
         return message;
     }
 }
