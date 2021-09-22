@@ -1,5 +1,7 @@
 package ru.otus.model;
 
+import java.lang.reflect.Array;
+
 public class Message {
     private final long id;
     private final String field1;
@@ -125,6 +127,9 @@ public class Message {
                 ", field8='" + field8 + '\'' +
                 ", field9='" + field9 + '\'' +
                 ", field10='" + field10 + '\'' +
+                ", field11='" + field11 + '\'' +
+                ", field12='" + field12 + '\'' +
+                ", field13=" + field13 +
                 '}';
     }
 
@@ -233,5 +238,15 @@ public class Message {
         public Message build() {
             return new Message(id, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
         }
+
+        public static Message copy(Message message){
+
+            Builder builder = new Builder (message.getId(), message.getField1(), message.getField2(), message.getField3(), message.getField4(),
+                    message.getField5(), message.getField6(), message.getField7(), message.getField8(), message.getField9(),
+                    message.getField10(), message.getField11(), message.getField12(), ObjectForMessage.copy(message.getField13()));
+            return builder.build();
+        }
+
+
     }
 }

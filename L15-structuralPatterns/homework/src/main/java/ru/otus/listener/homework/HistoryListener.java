@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class HistoryListener implements Listener, HistoryReader {
-    private final List<Message> history;
+    private  final List<Message> history;
 
 
     public HistoryListener(){
@@ -18,8 +18,21 @@ public class HistoryListener implements Listener, HistoryReader {
 
     @Override
     public void onUpdated(Message msg) {
-        history.add(msg);
-        throw new UnsupportedOperationException();
+        int i = 0;
+        for (Message m: history) {
+            System.out.println(m.toString());
+            if (m.getId() == msg.getId()){
+                history.remove(m);
+                history.add(Message.Builder.copy(msg));
+                System.out.println("find");
+                i++;
+            }
+        }
+        if (i == 0){
+            history.add(Message.Builder.copy(msg));
+        }
+
+        //throw new UnsupportedOperationException();
     }
 
     @Override
@@ -27,6 +40,6 @@ public class HistoryListener implements Listener, HistoryReader {
         for (Message m: history) {
             if (m.getId() == id) return Optional.of(m);
         }
-        throw new UnsupportedOperationException();
+        return Optional.of(null);
     }
 }
