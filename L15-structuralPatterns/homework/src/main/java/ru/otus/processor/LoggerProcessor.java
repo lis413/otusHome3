@@ -1,6 +1,7 @@
 package ru.otus.processor;
 
 import ru.otus.model.Message;
+import ru.otus.processor.homework.TimeProcessorException;
 
 public class LoggerProcessor implements Processor {
 
@@ -12,7 +13,7 @@ public class LoggerProcessor implements Processor {
     }
 
     @Override
-    public Message process(Message message) {
+    public Message process(Message message) throws TimeProcessorException {
         System.out.println("log processing message:" + message);
         return processor.process(message);
     }
