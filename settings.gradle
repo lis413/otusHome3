@@ -10,4 +10,5 @@ include 'L16-io:homework'
 include 'homework2'
 include 'L18-jdbc:demo'
 include 'L18-jdbc:homework'
-
+include 'L21-jpql:demo'
+include 'L21-jql:homework'
