@@ -23,7 +23,7 @@ public class CalcDemo {
             data.setValue(idx);
             summator.calc(data);
 
-            if (idx % 10_000_000 == 0) {
+            if (idx % 10_000_000 ==    0) {
                 System.out.println(LocalDateTime.now() + " current idx:" + idx);
             }
         }
@@ -34,6 +34,6 @@ public class CalcDemo {
         System.out.println(summator.getSumLastThreeValues());
         System.out.println(summator.getSomeValue());
         System.out.println(summator.getSum());
-        System.out.println("spend msec:" + delta + ", sec:" + (delta / 1000));
+        System.out.println(" spend msec: " + delta + ", sec:" + (delta / 1000));
     }
 }
