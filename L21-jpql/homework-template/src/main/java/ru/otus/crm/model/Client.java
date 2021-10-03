@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,9 +29,9 @@ public class Client implements Cloneable {
     private Address address;
 
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "phones_id")
-    private List<Phone> phones;
+    @OneToMany(targetEntity = Phone.class, fetch = FetchType.EAGER,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Phone> phones = new ArrayList<>();
 
     public Client() {
     }

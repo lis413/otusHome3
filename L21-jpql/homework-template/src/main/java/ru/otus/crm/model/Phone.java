@@ -19,6 +19,10 @@ public class Phone {
     @Column
     private String number;
 
+    @ManyToOne(targetEntity = Client.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    private Client client;
+
     public Phone(String number) {
         this.number = number;
     }
