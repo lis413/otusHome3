@@ -29,7 +29,7 @@ public class Client implements Cloneable {
     private Address address;
 
 
-    @OneToMany(targetEntity = Phone.class, fetch = FetchType.EAGER,
+    @OneToMany(mappedBy="client", targetEntity = Phone.class, fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Phone> phones = new ArrayList<>();
 

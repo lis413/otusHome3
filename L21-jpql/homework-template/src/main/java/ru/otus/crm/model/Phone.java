@@ -13,13 +13,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Phone {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id")
     private long id;
 
     @Column
     private String number;
 
-    @ManyToOne(targetEntity = Client.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Client.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
 
