@@ -11,6 +11,6 @@ public class Data {
     }
 
     public void setValue(Integer value) {
-        this.value = value;
+        this.value =   value;
     }
 }
