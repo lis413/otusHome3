@@ -5,6 +5,7 @@ import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import ru.otus.crm.service.DBServiceClient;
 import ru.otus.dao.UserDao;
 import ru.otus.services.TemplateProcessor;
 import ru.otus.services.UserAuthService;
@@ -16,15 +17,18 @@ import java.util.Arrays;
 
 public class UsersWebServerWithFilterBasedSecurity extends UsersWebServerSimple {
     private final UserAuthService authService;
+   // private final DBServiceClient dbServiceClient;
 
     public UsersWebServerWithFilterBasedSecurity(int port,
                                                  UserAuthService authService,
                                                  UserDao userDao,
                                                  Gson gson,
-                                                 TemplateProcessor templateProcessor) {
-        super(port, userDao, gson, templateProcessor);
+                                                 TemplateProcessor templateProcessor, DBServiceClient dbServiceClient) {
+        super(port, userDao, gson, templateProcessor, dbServiceClient);
         this.authService = authService;
+       // this.dbServiceClient = dbServiceClient1;
     }
+
 
     @Override
     protected Handler applySecurity(ServletContextHandler servletContextHandler, String... paths) {

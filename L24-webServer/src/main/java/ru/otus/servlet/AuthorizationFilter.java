@@ -28,7 +28,7 @@ public class AuthorizationFilter implements Filter {
         this.context.log("Requested Resource:" + uri);
 
         HttpSession session = request.getSession(false);
-        System.out.println(session.toString() + "+++++++++++++++++++++++++++++++++");
+
         if (session == null) {
             response.sendRedirect("/login");
         } else {

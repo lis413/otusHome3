@@ -2,6 +2,8 @@ package ru.otus;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import ru.otus.crm.service.DBServiceClient;
+import ru.otus.crm.service.DbServiceClientImpl;
 import ru.otus.dao.InMemoryUserDao;
 import ru.otus.dao.UserDao;
 import ru.otus.server.UsersWebServer;
@@ -28,9 +30,10 @@ public class WebServerSimpleDemo {
         UserDao userDao = new InMemoryUserDao();
         Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
         TemplateProcessor templateProcessor = new TemplateProcessorImpl(TEMPLATES_DIR);
+        DBServiceClient dbServiceClient = DbServiceClientImpl.getDBServiceClient();
 
         UsersWebServer usersWebServer = new UsersWebServerSimple(WEB_SERVER_PORT, userDao,
-                gson, templateProcessor);
+                gson, templateProcessor, dbServiceClient);
 
         usersWebServer.start();
         usersWebServer.join();

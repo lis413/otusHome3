@@ -7,13 +7,13 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import ru.otus.crm.service.DBServiceClient;
 import ru.otus.dao.UserDao;
 import ru.otus.helpers.FileSystemHelper;
+import ru.otus.services.DbServiceClientImpl;
 import ru.otus.services.TemplateProcessor;
 import ru.otus.servlet.AddClientsServlet;
 import ru.otus.servlet.ClientsServlet;
-import ru.otus.servlet.UsersApiServlet;
-import ru.otus.servlet.UsersServlet;
 
 
 public class UsersWebServerSimple implements UsersWebServer {
@@ -23,12 +23,22 @@ public class UsersWebServerSimple implements UsersWebServer {
     private final UserDao userDao;
     private final Gson gson;
     protected final TemplateProcessor templateProcessor;
+    protected final DBServiceClient dbServiceClient;
+
     private final Server server;
 
-    public UsersWebServerSimple(int port, UserDao userDao, Gson gson, TemplateProcessor templateProcessor) {
+//    public UsersWebServerSimple(int port, UserDao userDao, Gson gson, TemplateProcessor templateProcessor) {
+//        this.userDao = userDao;
+//        this.gson = gson;
+//        this.templateProcessor = templateProcessor;
+//        server = new Server(port);
+//    }
+
+    public UsersWebServerSimple(int port, UserDao userDao, Gson gson, TemplateProcessor templateProcessor, DBServiceClient dbServiceClient) {
         this.userDao = userDao;
         this.gson = gson;
         this.templateProcessor = templateProcessor;
+        this.dbServiceClient = dbServiceClient;
         server = new Server(port);
     }
 
@@ -57,7 +67,7 @@ public class UsersWebServerSimple implements UsersWebServer {
 
         HandlerList handlers = new HandlerList();
         handlers.addHandler(resourceHandler);
-        handlers.addHandler(applySecurity(servletContextHandler, "/users", "/api/user/*"));
+        handlers.addHandler(applySecurity(servletContextHandler, "/clients", "/clients/add"));
 
 
         server.setHandler(handlers);
@@ -78,10 +88,10 @@ public class UsersWebServerSimple implements UsersWebServer {
 
     private ServletContextHandler createServletContextHandler() {
         ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        servletContextHandler.addServlet(new ServletHolder(new UsersServlet(templateProcessor, userDao)), "/users");
-        servletContextHandler.addServlet(new ServletHolder(new ClientsServlet(templateProcessor)), "/clients");
-        servletContextHandler.addServlet(new ServletHolder(new AddClientsServlet(templateProcessor)), "/clients/add");
-        servletContextHandler.addServlet(new ServletHolder(new UsersApiServlet(userDao, gson)), "/api/user/*");
+        //servletContextHandler.addServlet(new ServletHolder(new UsersServlet(templateProcessor, userDao)), "/users");
+        servletContextHandler.addServlet(new ServletHolder(new ClientsServlet(templateProcessor, dbServiceClient)), "/clients");
+        servletContextHandler.addServlet(new ServletHolder(new AddClientsServlet(templateProcessor, dbServiceClient)), "/clients/add");
+       // servletContextHandler.addServlet(new ServletHolder(new UsersApiServlet(userDao, gson)), "/api/user/*");
         return servletContextHandler;
     }
 }

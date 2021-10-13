@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.eclipse.jetty.security.HashLoginService;
 import org.eclipse.jetty.security.LoginService;
+import ru.otus.crm.service.DBServiceClient;
+import ru.otus.crm.service.DbServiceClientImpl;
 import ru.otus.dao.InMemoryUserDao;
 import ru.otus.dao.UserDao;
 import ru.otus.helpers.FileSystemHelper;
@@ -35,13 +37,12 @@ public class WebServerWithBasicSecurityDemo {
         UserDao userDao = new InMemoryUserDao();
         Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
         TemplateProcessor templateProcessor = new TemplateProcessorImpl(TEMPLATES_DIR);
-
+        DBServiceClient dbServiceClient = DbServiceClientImpl.getDBServiceClient();
         String hashLoginServiceConfigPath = FileSystemHelper.localFileNameOrResourceNameToFullPath(HASH_LOGIN_SERVICE_CONFIG_NAME);
         LoginService loginService = new HashLoginService(REALM_NAME, hashLoginServiceConfigPath);
-        //LoginService loginService = new InMemoryLoginServiceImpl(userDao);
 
         UsersWebServer usersWebServer = new UsersWebServerWithBasicSecurity(WEB_SERVER_PORT,
-                loginService, userDao, gson, templateProcessor);
+                loginService, userDao, gson, templateProcessor, dbServiceClient);
 
         usersWebServer.start();
         usersWebServer.join();

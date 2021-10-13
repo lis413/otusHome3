@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import ru.otus.crm.model.Client;
 import ru.otus.crm.service.DBServiceClient;
 import ru.otus.services.TemplateProcessor;
-import ru.otus.services.UtilServiceLClient;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -22,10 +21,15 @@ public class ClientsServlet extends HttpServlet {
 
     private final TemplateProcessor templateProcessor;
 
-    DBServiceClient serviceClient = new UtilServiceLClient().getDBServiceClient();
+    DBServiceClient serviceClient; // = new UtilServiceLClient().getDBServiceClient();
 
     public ClientsServlet(TemplateProcessor templateProcessor) {
         this.templateProcessor = templateProcessor;
+    }
+
+    public ClientsServlet(TemplateProcessor templateProcessor, DBServiceClient serviceClient) {
+        this.templateProcessor = templateProcessor;
+        this.serviceClient = serviceClient;
     }
 
     @Override
