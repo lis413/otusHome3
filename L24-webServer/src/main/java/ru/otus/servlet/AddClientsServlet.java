@@ -59,7 +59,7 @@ import java.util.Map;
 
             serviceClient.saveClient(client);
 
-            response.sendRedirect("http://localhost:8080/clients");
+            response.sendRedirect("/clients");
 
         }
 
