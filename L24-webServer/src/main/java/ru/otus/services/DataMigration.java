@@ -23,7 +23,7 @@ public class DataMigration {
         this.dbServiceClient = dbServiceClient;
     }
 
-    public void saveDataDB(){
+    public void saveDataDB() {
         Address address1 = new Address("Leninina");
         Address address2 = new Address("Matrosova");
         Phone phone1 = new Phone("111");
@@ -32,12 +32,13 @@ public class DataMigration {
         Phone phone4 = new Phone("444");
         List<Phone> list1 = new ArrayList<>();
         List<Phone> list2 = new ArrayList<>();
-        list1.add(phone1); list1.add(phone2);
-        list2.add(phone3); list2.add(phone4);
+        list1.add(phone1);
+        list1.add(phone2);
+        list2.add(phone3);
+        list2.add(phone4);
         dbServiceClient.saveClient(new Client("dbServiceFirst", address1, list1));
-        System.out.println("SAVE CLIENT 2 +++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        var clientSecond = dbServiceClient.saveClient(new Client("dbServiceSecond", address2, list2));
-        System.out.println("SAVE CLIENT 2 +++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        dbServiceClient.saveClient(new Client("dbServiceSecond", address2, list2));
+
     }
 
 }

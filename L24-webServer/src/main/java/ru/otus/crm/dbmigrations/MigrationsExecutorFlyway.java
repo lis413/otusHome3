@@ -3,6 +3,14 @@ package ru.otus.crm.dbmigrations;
 import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.otus.crm.model.Address;
+import ru.otus.crm.model.Client;
+import ru.otus.crm.model.Phone;
+import ru.otus.crm.service.DBServiceClient;
+import ru.otus.crm.service.DbServiceClientImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MigrationsExecutorFlyway {
     private static final Logger logger = LoggerFactory.getLogger(MigrationsExecutorFlyway.class);
@@ -14,11 +22,16 @@ public class MigrationsExecutorFlyway {
                 .dataSource(dbUrl, dbUserName, dbPassword)
                 .locations("classpath:/db/migration")
                 .load();
+
+
     }
 
     public void executeMigrations() {
         logger.info("db migration started...");
         flyway.migrate();
         logger.info("db migration finished.");
+
     }
+
+
 }

@@ -17,15 +17,8 @@ public class ClientsServlet extends HttpServlet {
 
     private static final String USERS_PAGE_TEMPLATE = "clients.html";
     private static final String TEMPLATE_ATTR_RANDOM_USER = "listClients";
-
-
     private final TemplateProcessor templateProcessor;
-
-    DBServiceClient serviceClient; // = new UtilServiceLClient().getDBServiceClient();
-
-    public ClientsServlet(TemplateProcessor templateProcessor) {
-        this.templateProcessor = templateProcessor;
-    }
+    private final DBServiceClient serviceClient;
 
     public ClientsServlet(TemplateProcessor templateProcessor, DBServiceClient serviceClient) {
         this.templateProcessor = templateProcessor;
