@@ -1,4 +1,4 @@
-package ru.otus.services;
+package ru.otus.crm.config;
 
 import org.hibernate.cfg.Configuration;
 import ru.otus.core.repository.DataTemplateHibernate;
@@ -9,11 +9,12 @@ import ru.otus.crm.model.Address;
 import ru.otus.crm.model.Client;
 import ru.otus.crm.model.Phone;
 import ru.otus.crm.service.DBServiceClient;
+import ru.otus.crm.service.DbServiceClientImpl;
 
 import static ru.otus.WebServerWithFilterBasedSecurityDemo.HIBERNATE_CFG_FILE;
 
-public class DbServiceClientImpl {
-    public DBServiceClient getDBServiceClientImpl(){
+public class Config {
+    public static DBServiceClient getDBServiceClient(){
         var configuration = new Configuration().configure(HIBERNATE_CFG_FILE);
 
         var dbUrl = configuration.getProperty("hibernate.connection.url");
@@ -29,7 +30,7 @@ public class DbServiceClientImpl {
         var clientTemplate = new DataTemplateHibernate<>(Client.class);
 ///
 
-        var dbServiceClient = new ru.otus.crm.service.DbServiceClientImpl(transactionManager, clientTemplate);
+        var dbServiceClient = new DbServiceClientImpl(transactionManager, clientTemplate);
         return dbServiceClient;
     }
 }

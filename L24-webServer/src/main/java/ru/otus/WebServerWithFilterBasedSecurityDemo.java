@@ -2,8 +2,12 @@ package ru.otus;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.flywaydb.core.Flyway;
+import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.otus.crm.config.Config;
+import ru.otus.crm.dbmigrations.MigrationsExecutorFlyway;
 import ru.otus.crm.service.DBServiceClient;
 import ru.otus.crm.service.DbServiceClientImpl;
 import ru.otus.dao.InMemoryUserDao;
@@ -11,6 +15,8 @@ import ru.otus.dao.UserDao;
 import ru.otus.server.UsersWebServer;
 import ru.otus.server.UsersWebServerWithFilterBasedSecurity;
 import ru.otus.services.*;
+
+import javax.sql.DataSource;
 
 /*
     Полезные для демо ссылки
@@ -32,19 +38,28 @@ public class WebServerWithFilterBasedSecurityDemo {
     public static final String HIBERNATE_CFG_FILE = "hibernate.cfg.xml";
 
     public static void main(String[] args) throws Exception {
-        //DataMigration utilService = new DataMigration();
-       // utilService.saveDataDB();
+
+
+        var configuration = new Configuration().configure(HIBERNATE_CFG_FILE);
+
+        var dbUrl = configuration.getProperty("hibernate.connection.url");
+        var dbUserName = configuration.getProperty("hibernate.connection.username");
+        var dbPassword = configuration.getProperty("hibernate.connection.password");
+
+        new MigrationsExecutorFlyway(dbUrl, dbUserName, dbPassword).executeMigrations();
+
+        DBServiceClient dbServiceClient = Config.getDBServiceClient();
 
         UserDao userDao = new InMemoryUserDao();
         Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
         TemplateProcessor templateProcessor = new TemplateProcessorImpl(TEMPLATES_DIR);
         UserAuthService authService = new UserAuthServiceImpl(userDao);
-        DBServiceClient dbServiceClient = DbServiceClientImpl.getDBServiceClient();
-        DataMigration dataMigration = new DataMigration(dbServiceClient);
-        dataMigration.saveDataDB();
+
         UsersWebServer usersWebServer = new UsersWebServerWithFilterBasedSecurity(WEB_SERVER_PORT,
                 authService, userDao, gson, templateProcessor, dbServiceClient);
         usersWebServer.start();
         usersWebServer.join();
     }
+
+
 }
