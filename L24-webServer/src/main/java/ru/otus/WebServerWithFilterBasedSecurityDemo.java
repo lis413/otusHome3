@@ -39,15 +39,6 @@ public class WebServerWithFilterBasedSecurityDemo {
 
     public static void main(String[] args) throws Exception {
 
-
-        var configuration = new Configuration().configure(HIBERNATE_CFG_FILE);
-
-        var dbUrl = configuration.getProperty("hibernate.connection.url");
-        var dbUserName = configuration.getProperty("hibernate.connection.username");
-        var dbPassword = configuration.getProperty("hibernate.connection.password");
-
-        new MigrationsExecutorFlyway(dbUrl, dbUserName, dbPassword).executeMigrations();
-
         DBServiceClient dbServiceClient = Config.getDBServiceClient();
 
         UserDao userDao = new InMemoryUserDao();
@@ -55,8 +46,11 @@ public class WebServerWithFilterBasedSecurityDemo {
         TemplateProcessor templateProcessor = new TemplateProcessorImpl(TEMPLATES_DIR);
         UserAuthService authService = new UserAuthServiceImpl(userDao);
 
+        DataMigration dataMigration = new DataMigration(dbServiceClient);
+        dataMigration.saveDataDB();
+
         UsersWebServer usersWebServer = new UsersWebServerWithFilterBasedSecurity(WEB_SERVER_PORT,
-                authService, userDao, gson, templateProcessor, dbServiceClient);
+                authService, templateProcessor, dbServiceClient);
         usersWebServer.start();
         usersWebServer.join();
     }

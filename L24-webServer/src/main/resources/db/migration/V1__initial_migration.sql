@@ -24,10 +24,15 @@ create table phone
        primary key (id)
 );
 
+
+alter table if exists client add constraint FKb137u2cl2ec0otae32lk5pcl2 foreign key (address_id) references address;
+alter table if exists phone add constraint FK3o48ec26lujl3kf01hwqplhn2 foreign key (client_id) references client;
+
+
 insert into address (street) values ('Matrosova');
 insert into address (street) values ('Bogoslovskaya');
-insert into client (address_id, name, id) values (1, 'Ilya', 1);
-insert into client (address_id, name, id) values (2, 'Kolya', 2);
+insert into client (address_id, name, id) values ((select id from address where street = 'Matrosova'), 'Ilya', 1);
+insert into client (address_id, name, id) values ((select id from address where street = 'Bogoslovskaya'), 2, 'Kolya', 2);
 
 insert into phone (client_id, number, id) values (1, 123, 1);
 insert into phone (client_id, number, id) values (1, 1234, 2);

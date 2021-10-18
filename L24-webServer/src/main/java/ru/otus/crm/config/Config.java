@@ -15,7 +15,7 @@ import static ru.otus.WebServerWithFilterBasedSecurityDemo.HIBERNATE_CFG_FILE;
 
 public class Config {
     public static DBServiceClient getDBServiceClient(){
-        var configuration = new Configuration().configure(HIBERNATE_CFG_FILE);
+        var configuration = getConfiguration();
 
         var dbUrl = configuration.getProperty("hibernate.connection.url");
         var dbUserName = configuration.getProperty("hibernate.connection.username");
@@ -32,5 +32,15 @@ public class Config {
 
         var dbServiceClient = new DbServiceClientImpl(transactionManager, clientTemplate);
         return dbServiceClient;
+    }
+
+    public static Configuration getConfiguration(){
+        var configuration = new Configuration().configure(HIBERNATE_CFG_FILE);
+
+        var dbUrl = configuration.getProperty("hibernate.connection.url");
+        var dbUserName = configuration.getProperty("hibernate.connection.username");
+        var dbPassword = configuration.getProperty("hibernate.connection.password");
+
+        return configuration;
     }
 }
