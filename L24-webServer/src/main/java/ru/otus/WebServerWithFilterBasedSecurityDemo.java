@@ -42,12 +42,12 @@ public class WebServerWithFilterBasedSecurityDemo {
         DBServiceClient dbServiceClient = Config.getDBServiceClient();
 
         UserDao userDao = new InMemoryUserDao();
-        Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
+ //       Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
         TemplateProcessor templateProcessor = new TemplateProcessorImpl(TEMPLATES_DIR);
         UserAuthService authService = new UserAuthServiceImpl(userDao);
 
-        DataMigration dataMigration = new DataMigration(dbServiceClient);
-        dataMigration.saveDataDB();
+//        DataMigration dataMigration = new DataMigration(dbServiceClient);
+//        dataMigration.saveDataDB();
 
         UsersWebServer usersWebServer = new UsersWebServerWithFilterBasedSecurity(WEB_SERVER_PORT,
                 authService, templateProcessor, dbServiceClient);

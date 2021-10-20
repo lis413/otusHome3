@@ -30,6 +30,7 @@ public class Client implements Cloneable {
     private Address address;
 
 
+
     @OneToMany(mappedBy="client", targetEntity = Phone.class, fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     //@JoinColumn(name = "client_id")

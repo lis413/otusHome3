@@ -20,6 +20,7 @@ public class Phone {
     @Column
     private String number;
 
+
     @ManyToOne(targetEntity = Client.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;

@@ -29,7 +29,7 @@ public class ClientsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws IOException {
         Map<String, Object> paramsMap = new HashMap<>();
         List<Client> listClient = serviceClient.findAll();
-        System.out.println(listClient);
+       // System.out.println(listClient);
         paramsMap.put(TEMPLATE_ATTR_RANDOM_USER, listClient);
         response.setContentType("text/html");
         response.getWriter().println(templateProcessor.getPage(USERS_PAGE_TEMPLATE, paramsMap));
