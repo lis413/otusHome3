@@ -13,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Phone {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
 

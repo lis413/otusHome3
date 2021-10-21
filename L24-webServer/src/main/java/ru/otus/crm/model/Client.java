@@ -17,7 +17,7 @@ import java.util.List;
 public class Client implements Cloneable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
@@ -87,7 +87,7 @@ public class Client implements Cloneable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address=" + address +
-                ", phones=" + phones +
+               // ", phones=" + phones +
                 '}';
     }
 
