@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Пользователи</title>
+</head>
+
+<body>
+<table style="width: 400px">
+    <thead>
+        <tr>
+            <td style="width: 50px">Id</td>
+            <td style="width: 150px">Имя</td>
+            <td style="width: 100px">Адрес</td>
+        </tr>
+    </thead>
+    <tbody>
+    <#list listClients as client>
+<!--    <p>${client}-->
+        <tr>
+            <td>${client.id}</td>
+            <td>${client.name}</td>
+            <td>${client.address}</td>
+        </tr>
+    </#list>
+    </tbody>
+</table>
+<a href="clients/add">Перейти на странцу добавления клиента</a>
+</body>
+</html>
