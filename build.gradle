@@ -53,6 +53,11 @@ allprojects {
             dependency("org.neo4j.driver:neo4j-java-driver:${Versions.neo4j}")
 
             dependency("redis.clients:jedis:${Versions.jedis}")
+
+//            dependency("org.junit.jupiter:junit-jupiter-engine")
+//            dependency("org.junit.jupiter:junit-jupiter-params")
+//            dependency("org.assertj:assertj-core")
+//            dependency("org.mockito:mockito-junit-jupiter")
         }
     }
 
