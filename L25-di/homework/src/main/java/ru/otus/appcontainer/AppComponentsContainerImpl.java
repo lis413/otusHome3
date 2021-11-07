@@ -7,6 +7,7 @@ import ru.otus.appcontainer.api.AppComponentsContainer;
 import ru.otus.appcontainer.api.AppComponentsContainerConfig;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
 @Slf4j
@@ -21,32 +22,48 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
 
     private void processConfig(Class<?> configClass) {
         checkConfigClass(configClass);
-        parseConfig(configClass);
+        try {
+            parseConfig(configClass);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
     }
 
-    @SneakyThrows
-    private void parseConfig(Class<?> configClass) {
+
+    private void parseConfig(Class<?> configClass) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Object config = configClass.getDeclaredConstructor().newInstance();
         Arrays.stream(configClass.getDeclaredMethods())
                 .filter(method -> method.isAnnotationPresent(AppComponent.class))
                 .sorted(Comparator.comparingInt(method -> method.getAnnotation(AppComponent.class).order()))
                 .forEach(method -> {
-                    Object comp;
-                    method.setAccessible(true);
-                    Class<?>[] parameters = method.getParameterTypes();
-                    Object[] args = new Object[parameters.length];
-                    for (int i = 0; i < parameters.length; i++) {
-                        args[i] = getAppComponent(parameters[i]);
-                    }
-                    try {
-                        comp = method.invoke(config, args);
-                    } catch (IllegalAccessException | InvocationTargetException e) {
-                        throw new RuntimeException(e);
-                    }
-                    String name = method.getAnnotation(AppComponent.class).name();
-                    appComponentsByName.put(name, comp);
-                    appComponents.add(comp);
+                    addMethod(method, config);
                 });
+    }
+
+    private void addMethod(Method method, Object config){
+        Object comp;
+        method.setAccessible(true);
+        Class<?>[] parameters = method.getParameterTypes();
+        Object[] args = new Object[parameters.length];
+        for (int i = 0; i < parameters.length; i++) {
+            args[i] = getAppComponent(parameters[i]);
+        }
+        try {
+            comp = method.invoke(config, args);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        String name = method.getAnnotation(AppComponent.class).name();
+        if (appComponentsByName.get(name) == null) {
+            appComponentsByName.put(name, comp);
+            appComponents.add(comp);
+        }
     }
 
     private void checkConfigClass(Class<?> configClass) {
