@@ -42,7 +42,7 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
                 .filter(method -> method.isAnnotationPresent(AppComponent.class))
                 .sorted(Comparator.comparingInt(method -> method.getAnnotation(AppComponent.class).order()))
                 .forEach(method -> {
-                    addMethod(method, config);
+                     addMethod(method, config);
                 });
     }
 
