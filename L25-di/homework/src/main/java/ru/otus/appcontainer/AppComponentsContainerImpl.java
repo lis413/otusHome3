@@ -16,23 +16,13 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     private final List<Object> appComponents = new ArrayList<>();
     private final Map<String, Object> appComponentsByName = new HashMap<>();
 
-    public AppComponentsContainerImpl(Class<?> initialConfigClass) {
+    public AppComponentsContainerImpl(Class<?> initialConfigClass) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         processConfig(initialConfigClass);
     }
 
-    private void processConfig(Class<?> configClass) {
+    private void processConfig(Class<?> configClass) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         checkConfigClass(configClass);
-        try {
             parseConfig(configClass);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -47,13 +37,16 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     }
 
     private void addMethod(Method method, Object config){
-        Object comp;
         method.setAccessible(true);
         Class<?>[] parameters = method.getParameterTypes();
         Object[] args = new Object[parameters.length];
         for (int i = 0; i < parameters.length; i++) {
             args[i] = getAppComponent(parameters[i]);
         }
+            newObject(method, config, args);
+    }
+    private void newObject(Method method, Object config, Object args){
+        Object comp;
         try {
             comp = method.invoke(config, args);
         } catch (IllegalAccessException | InvocationTargetException e) {
