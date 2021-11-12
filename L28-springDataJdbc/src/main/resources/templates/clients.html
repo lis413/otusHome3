@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список клиентов</title>
+</head>
+<body>
+<!--<a th:href="@{add-client}">Добавить клиента</a>-->
+
+<a th:href="@{add-client}">Добавить клиента</a>
+<table border="1" style="width: 400px">
+    <thead>
+    <tr>
+        <td style="width: 50px">Id</td>
+        <td style="width: 150px">Имя</td>
+        <td style="width: 150px">Адрес</td>
+        <td style="width: 150px">Телефон</td>
+    </tr>
+    </thead>
+    </tr>
+    <tr th:each="client: ${clients}">
+        <td th:utext="${client.id}"></td>
+        <td th:utext="${client.name}"></td>
+        <td th:utext="${client.address.getStreet()}"></td>
+        <td th:utext="${client.getNumberPhones()}"></td>
+<!--        <td th:utext="${client.name}"></td>-->
+<!--        <td th:text="${@formatterServiceImpl.formatPhones(client.phones)}"></td>-->
+<!--        <td th:text="${@formatterServiceImpl.formatAddress(client.address)}"></td>-->
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление клиента</title>
+</head>
+<body>
+<form action="#" method="post" th:action="@{/add-client}" th:object="${client}">
+    <label for="name">Имя</label>
+    <p>
+        <input type="text" th:field="*{name}" id="name">
+    </p>
+    <label for="street">Улица</label>
+    <p>
+        <input type="text" th:field="*{address.street}" id="street">
+    </p>
+    <label for="phones">Телефон</label>
+    <p>
+        <input type="text" th:field="*{phones}" id="phones">
+    </p>
+    <p>
+        <input type="submit" value="Создать">
+    </p>
+</form>
+
+</body>
+</html>
