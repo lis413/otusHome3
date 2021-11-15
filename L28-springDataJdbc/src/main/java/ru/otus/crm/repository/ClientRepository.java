@@ -9,9 +9,9 @@ import java.util.Set;
 
 public interface ClientRepository extends CrudRepository<Client, Long> {
 
-    public List<Client> findAll();
+    List<Client> findAll();
 
     @Query("select max(id) from client")
-    public Long findMaxId();
+    Long findMaxId();
 
 }
