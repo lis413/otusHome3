@@ -29,15 +29,6 @@ public class DbServiceClientImpl implements DBServiceClient {
         return transactionManager.doInTransaction(() -> {
             Long id = clientRepository.findMaxId();
             client.setId(id+1);
-//            client.getAddress().setClientId(id+1);
-//            Set<Phone> phone = new HashSet<Phone>();
-//            Phone phone1 = new Phone("123", 4L);
-//            for (Phone ph: client.getPhones()) {
-//                if (ph != null)
-//                ph.setClientId(id+1);
-//            }
-//            phone.add(phone1);
-          //  client.setPhones(phone);
             var savedClient = clientRepository.save(client);
             log.info("saved client: {}", savedClient);
             return savedClient;
