@@ -27,8 +27,8 @@ public class DbServiceClientImpl implements DBServiceClient {
     @Override
     public Client saveClient(Client client) {
         return transactionManager.doInTransaction(() -> {
-            Long id = clientRepository.findMaxId();
-            client.setId(id+1);
+//            Long id = clientRepository.findMaxId();
+//            client.setId(id+1);
             var savedClient = clientRepository.save(client);
             log.info("saved client: {}", savedClient);
             return savedClient;
