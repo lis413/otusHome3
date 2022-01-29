@@ -53,7 +53,7 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
             throw new RuntimeException(e);
         }
         String name = method.getAnnotation(AppComponent.class).name();
-        if (appComponentsByName.get(name) == null) {
+        if (!appComponentsByName.containsKey(name)) {
             appComponentsByName.put(name, comp);
             appComponents.add(comp);
         }
